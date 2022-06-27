@@ -72,6 +72,7 @@ form button {
 }
 
 
+
 input {
   line-height: 1.5;
   width: 100%;
@@ -101,7 +102,12 @@ button:disabled {
   cursor: not-allowed;
 }
 
-
+.heading-main{
+ display:flex;
+ position: fixed;
+ text-align: center;
+ justify-content: center;
+}
 .sign-in {
   color: #282c34;
   background: white;

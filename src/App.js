@@ -1,7 +1,10 @@
+import React, { useRef, useState } from 'react';
+
 import './App.css';
-import firebase from 'firebase\app';
-import 'firebase\firestore';
-import 'firebase\auth';
+
+import firebase from 'firebase/compat/app';
+import 'firebase/compat/auth';
+import 'firebase/compat/firestore';
 
 import {useAuthState} from 'react-firebase-hooks/auth';
 import {useCollectionData} from 'react-firebase-hooks/firestore';
@@ -30,12 +33,14 @@ const firestore = firebase.firestore();
 
 function App() {
 
-  const [user] = useAuthState();
+  const [user] = useAuthState(auth);
 
   return (
     <div className="App">
       <header>
+         <SignOut />
 
+         <h1 classname="heading-main">Chat App</h1>
       </header>
 
       <section>
@@ -48,7 +53,7 @@ function App() {
 function SignIn(){
   const signInWithGoogle =()=>{
     const provider = new firebase.auth.GoogleAuthProvider();
-    auth.signINWithPopup(provider);
+    auth.signInWithPopup(provider);
   }
 
 return(
@@ -62,24 +67,6 @@ function SignOut(){
    <button onClick ={()=> auth.signOut()}>Sign Out</button>
  )
 }
-
-function ChatMessage(props){
-
-  const {text,uid} = props.message;
-
-  const messageClass = uid === auth.currentUser.uid ? 'sent': 'received';
-
-  return(
-    <div className={`message ${messageClass}`}>
-      <img src ={photoURL}/>
-      <p>{text}</p>
-    </div>
-  )
-
-
-}
-
-
 function ChatRoom(){
  const dummy = useRef()
 
@@ -126,5 +113,24 @@ function ChatRoom(){
 
 
 }
+
+function ChatMessage(props){
+
+  const {text,uid,photoURL} = props.message;
+
+  const messageClass = uid === auth.currentUser.uid ? 'sent': 'received';
+
+  return(
+    <div className={`message ${messageClass}`}>
+      <img src ={photoURL}/>
+      <p>{text}</p>
+    </div>
+  )
+
+
+}
+
+
+
 
 export default App;
